@@ -1,0 +1,10 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: linear-gradient(to bottom right, #ffffff, #ffe6f0); /* Pink to white gradient */
+  background-attachment: fixed;
+}

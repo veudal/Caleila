@@ -1,0 +1,5 @@
+body {
+  background-color: #ffe4e1; /* Soft pink base color */
+  background-image: radial-gradient(circle at 10px 10px, #ff9ff3 10px, transparent 20px), radial-gradient(circle at 30px 30px, #f368e0 10px, transparent 20px);
+  background-size: 40px 40px; /* Size of each repeating pattern */
+}
