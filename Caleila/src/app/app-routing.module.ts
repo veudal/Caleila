@@ -9,11 +9,6 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  //{  
-  //  path: 'calendar',
-  //  loadChildren: () =>
-  //    import('./calendar/calendar.module').then((m) => m.CalendarModule),
-  //},
 ];
 
 @NgModule({
