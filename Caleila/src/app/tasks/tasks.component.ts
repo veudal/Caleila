@@ -1,8 +1,13 @@
 import { Component } from '@angular/core';
 
 import { MatDialog } from '@angular/material/dialog';
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, DragDropModule } from '@angular/cdk/drag-drop';
 import { AppointmentDialogComponent } from '../appointment-dialog/appointment-dialog.component';
+import { CommonModule } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggle, MatButtonToggleGroup, MatButtonToggleModule } from '@angular/material/button-toggle'
+import { UUIDService } from '../services/uuid.service';
 
 interface Appointment {
   uuid?: string;
@@ -20,12 +25,22 @@ export enum CalendarView {
 }
 
 @Component({
-  selector: 'app-calendar',
-  templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss'],
+  selector: 'app-tasks',
+  templateUrl: './tasks.component.html',
+  styleUrls: ['./tasks.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatButtonToggleGroup,
+    MatButtonToggle,
+    MatIconModule,
+    DragDropModule,
+    AppointmentDialogComponent
+  ],
 })
 
-export class CalendarComponent {
+export class TasksComponent {
   viewDate: Date = new Date();
   selectedDate: Date | null = null;
   selectedStartTime: string | undefined;
@@ -216,34 +231,9 @@ export class CalendarComponent {
     this.openDialog();
   }
 
-  generateUUID(): string {
-    let d = new Date().getTime(); //Timestamp
-    let d2 =
-      (typeof performance !== 'undefined' &&
-        performance.now &&
-        performance.now() * 1000) ||
-      0;
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(
-      /[xy]/g,
-      function (c) {
-        let r = Math.random() * 16; //random number between 0 and 16
-        if (d > 0) {
-          //Use timestamp until depleted
-          r = (d + r) % 16 | 0;
-          d = Math.floor(d / 16);
-        } else {
-          //Use microseconds since page-load if supported
-          r = (d2 + r) % 16 | 0;
-          d2 = Math.floor(d2 / 16);
-        }
-        return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
-      }
-    );
-  }
-
   addAppointment(date: Date, title: string, startTime: string, endTime: string) {
     this.appointments.push({
-      uuid: this.generateUUID(),
+      uuid: UUIDService.generateUUID(),
       date,
       title,
       startTime,
@@ -324,16 +314,28 @@ export class CalendarComponent {
       date.getFullYear() === this.viewDate.getFullYear()
     );
   }
-
+     
   getAppointmentsForDateTime(date: Date, timeSlot: string): Appointment[] {
-    const appointmentsForDateTime: Appointment[] = this.appointments.filter(
-      (appointment) =>
-        this.isSameDate(appointment.date, date) &&
-        appointment.startTime <= timeSlot &&
-        appointment.endTime >= timeSlot
-    );
+    const [hour] = timeSlot.split(':').map(Number);
+    const startSlot = new Date(date.getFullYear(), date.getMonth(), date.getDate(), hour, 0);
+    const endSlot = new Date(startSlot);
+    endSlot.setHours(endSlot.getHours() + 1); 
 
-    return appointmentsForDateTime;
+    return this.appointments.filter(appointment => {
+      const appointmentStart = new Date(appointment.date);
+      const [startHour, startMinute] = appointment.startTime.split(':').map(Number);
+      appointmentStart.setHours(startHour, startMinute);
+
+      const appointmentEnd = new Date(appointment.date);
+      const [endHour, endMinute] = appointment.endTime.split(':').map(Number);
+      appointmentEnd.setHours(endHour, endMinute);
+
+      return (
+        (appointmentStart >= startSlot && appointmentStart < endSlot) ||
+        (appointmentEnd > startSlot && appointmentEnd <= endSlot) ||
+        (appointmentStart <= startSlot && appointmentEnd >= endSlot)
+      );
+    });
   }
 
   getRandomColor(): string {

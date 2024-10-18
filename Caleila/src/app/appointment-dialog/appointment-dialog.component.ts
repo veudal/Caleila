@@ -15,7 +15,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CommonModule } from '@angular/common';
-import { DragDropModule } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-appointment-dialog',
@@ -30,7 +29,6 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatButtonModule,
     MatDatepickerModule,
     ReactiveFormsModule,
-    DragDropModule,
   ],
 })
 export class AppointmentDialogComponent {
@@ -53,7 +51,7 @@ export class AppointmentDialogComponent {
         title: [this.data.title || '', Validators.required],
         date: [this.data.date, Validators.required],
         startTime: [this.data.startTime || '', Validators.required],
-        endTime: [this.data.startTime || '', Validators.required],
+        endTime: [this.data.endTime || '', Validators.required],
       },
       { validators: this.timeRangeValidator }
     );

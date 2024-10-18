@@ -1,0 +1,52 @@
+.todo-list {
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 24px;
+  padding: 6%;
+  height: 70vh;
+}
+
+.mat-checkbox {
+  transform: scale(1.8);
+  margin-left: 20px;
+}
+
+table {
+  background-color: #f3dde1;
+}
+
+.custom-input .strike-through {
+  text-decoration: line-through;
+}
+
+.add-task-button {
+  position: fixed;
+  bottom: 20px;
+  right: 40px;
+  background-color: #ff5dd6;
+  color: white;
+}
+
+  .add-task-button:hover {
+    background-color: #fe45cf;
+  }
+
+.delete-column-header {
+  text-align: right;
+}
+
+.delete-column-cell {
+  text-align: right;
+}
+
+.delete-button {
+  margin-right: 6px;
+}
+
+.custom-input {
+  width: 100%;
+  background-color: transparent;
+  font-size: 28px;
+}

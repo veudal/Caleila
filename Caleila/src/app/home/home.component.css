@@ -1,5 +1,26 @@
-body {
-  background-color: #ffe4e1; /* Soft pink base color */
-  background-image: radial-gradient(circle at 10px 10px, #ff9ff3 10px, transparent 20px), radial-gradient(circle at 30px 30px, #f368e0 10px, transparent 20px);
-  background-size: 40px 40px; /* Size of each repeating pattern */
+mat-tab-group {
+  flex: 1; /* Allow the tab group to expand */
+  height: 100%; /* Ensure it takes full height */
 }
+
+.custom-snackbar {
+  padding: 6px;
+  background-color: deeppink;
+  border-radius: 8px;
+}
+
+  .custom-snackbar .mat-mdc-snack-bar-label {
+    font-size: 32px !important;
+    line-height: 1.5 !important;
+    text-align: center;
+  }
+
+  .custom-snackbar .mdc-button__label {
+    font-size: 26px !important;
+  }
+
+  .custom-snackbar .mdc-button {
+    margin-left: 10px;
+    border-radius: 16px;
+    height: 80%;
+  }

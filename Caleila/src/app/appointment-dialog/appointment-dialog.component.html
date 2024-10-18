@@ -1,4 +1,5 @@
-<div class="dialog-content">
+<div class="dialog-content"
+     [ngClass]="data.uuid ? 'edit-task-bg' : 'add-task-bg'">
   <h5 mat-dialog-title *ngIf="!data.uuid">Add Task</h5>
   <h5 mat-dialog-title *ngIf="data.uuid">Edit Task</h5>
   <div [formGroup]="appointmentForm">
@@ -21,12 +22,8 @@
         <mat-label>End Time</mat-label>
         <input matInput formControlName="endTime" type="time" />
       </mat-form-field>
-      <div
-        *ngIf="
-          appointmentForm.errors && appointmentForm.errors['timeRangeInvalid']
-        "
-        class="error"
-      >
+      <div *ngIf="appointmentForm.errors && appointmentForm.errors['timeRangeInvalid']"
+           class="error">
         End time must be after start time.
       </div>
     </div>
@@ -43,7 +40,7 @@
       </button>
       <button type="submit" mat-flat-button (click)="onSaveClick()" style="margin-left: 10px">
         <span *ngIf="data.uuid">Edit Task</span>
-        <span *ngIf="!data.uuid">Add Task</span>
+        <span *ngIf="!data.uuid">Create Task</span>
       </button>
     </div>
   </div>

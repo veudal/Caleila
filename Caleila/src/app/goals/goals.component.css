@@ -1,0 +1,60 @@
+html, body {
+  min-height: 100vh;
+  height: auto;
+}
+
+/*h1 {
+  font-family: "Ruge Boogie", cursive;
+  font-weight: 400;
+  font-style: normal;
+}*/
+
+h1 {
+  font-family: "Dancing Script", cursive;
+  font-weight: 700;
+  opacity: 0.8;
+}
+
+
+body {
+  margin: 0; /* Remove default margin */
+  height: 70vh;
+  display: flex; /* Flexbox for centering */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  background-color: #ff77b5; /* Light pink background */
+  font-family: 'Arial', sans-serif; /* Font family */
+}
+
+.container {
+  min-height: 100vh;
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column; /* Stack the child elements */
+  align-items: center; /* Center horizontally */
+  overflow: hidden;
+}
+
+
+.child-container {
+  position: absolute; /* Position it absolutely within the body */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust position to center */
+  text-align: center; /* Center text */
+  z-index: 0; /* Place it behind other content */
+  color: rgba(255, 105, 180, 0.1); /* Light pink text with transparency */
+  font-size: 5rem; /* Adjusted font size for the background */
+  margin: 0; /* Remove margin */
+  font-weight: bold; /* Bold text */
+  text-transform: uppercase; /* Uppercase text */
+}
+
+
+.child-container h1 {
+  font-size: 3rem; /* Font size */
+  color: #ff69b4; /* Pink text color */
+  margin: 0; /* Remove margin */
+  font-weight: bold; /* Bold text */
+  text-transform: uppercase; /* Uppercase text */
+}

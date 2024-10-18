@@ -8,19 +8,23 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { ToDoComponent } from './to-do/to-do.component';
 import { NotesComponent } from './notes/notes.component';
+import { GoalsComponent } from './goals/goals.component';
+import { TasksComponent } from './tasks/tasks.component';
 
 @NgModule({
   declarations: [
     AppComponent,
   ],
   imports: [
+    TasksComponent,
+    GoalsComponent,
     ToDoComponent,
     NotesComponent,
     HomeComponent,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatNativeDateModule,     
+    MatNativeDateModule, 
   ],
   bootstrap: [AppComponent],
   providers: [
