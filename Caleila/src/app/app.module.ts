@@ -10,6 +10,7 @@ import { ToDoComponent } from './to-do/to-do.component';
 import { NotesComponent } from './notes/notes.component';
 import { GoalsComponent } from './goals/goals.component';
 import { TasksComponent } from './tasks/tasks.component';
+import { CollageComponent } from './collage/collage.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { TasksComponent } from './tasks/tasks.component';
     GoalsComponent,
     ToDoComponent,
     NotesComponent,
+    CollageComponent,
     HomeComponent,
     BrowserModule,
     AppRoutingModule,

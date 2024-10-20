@@ -81,7 +81,7 @@ export class TasksComponent {
   }
 
   generateMonthView(date: Date) {
-    const start = new Date(date.getFullYear(), date.getMonth(), 1);
+    const start = new Date(date.getFullYear(), date.getMonth(), 0);
     const end = new Date(date.getFullYear(), date.getMonth() + 1, 0);
     this.weeks = [];
     this.monthDays = [];
@@ -137,7 +137,7 @@ export class TasksComponent {
   }
 
   generateTimeSlots() {
-    for (let hour = 0; hour <= 24; hour++) {
+    for (let hour = 6; hour <= 24; hour++) {
       const time = hour < 10 ? `0${hour}:00` : `${hour}:00`;
       this.timeSlots.push(time);
     }

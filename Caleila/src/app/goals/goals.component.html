@@ -14,7 +14,15 @@
     <button mat-fab class="add-goal-button" (click)="addGoal()">
       <mat-icon>add</mat-icon>
     </button>
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" cdkDropList (cdkDropListDropped)="drop($event)" [cdkDropListDisabled]="dragDisabled" class="mat-elevation-z8">
+      <!-- Drag Handle Column -->
+      <ng-container matColumnDef="dragHandle">
+        <th mat-header-cell *matHeaderCellDef style="width: 40px;"></th>
+        <td (mousedown)="dragDisabled = false;" mat-cell *matCellDef="let goal; let i = index" class="dragCursor" style="width: 40px;">
+          <span cdkDragHandle class="drag-icon">☰</span> <!-- Only this span will be the drag handle -->
+        </td>
+      </ng-container>
+
       <!-- Index Column -->
       <ng-container matColumnDef="index">
         <th mat-header-cell *matHeaderCellDef style="width: 6%;"> Nr. </th>
@@ -34,9 +42,9 @@
       <!-- Goal Column with Mat Input -->
       <ng-container matColumnDef="goal">
         <th mat-header-cell *matHeaderCellDef> Goal </th>
-        <td mat-cell *matCellDef="let goal">
-          <mat-form-field class="custom-input">
-            <input matInput [(ngModel)]="goal.description" (input)="onDescriptionChange()" />
+        <td mat-cell *matCellDef="let goal; let i = index">
+          <mat-form-field class="custom-input" appearance="fill">
+            <input matInput [(ngModel)]="goal.description" (focus)="currentFocusedIndex = i" (blur)="currentFocusedIndex = -1" (keydown)="onKeydown($event)" (input)="onDescriptionChange()" />
           </mat-form-field>
         </td>
       </ng-container>
@@ -44,19 +52,15 @@
       <!-- Delete Column -->
       <ng-container matColumnDef="delete">
         <th mat-header-cell *matHeaderCellDef class="delete-column-header"> Delete </th>
-        <td mat-cell *matCellDef="let goal" class="delete-column-cell">
-          <button mat-icon-button (click)="deleteGoal(goal)" class="delete-button">
+        <td mat-cell *matCellDef="let goal; let i = index" class="delete-column-cell">
+          <button mat-icon-button [ngClass]="{'hidden': currentFocusedIndex === i && currentFocusedIndex !== -1}" (click)="deleteGoal(goal)" class="delete-button">
             <mat-icon>delete</mat-icon>
           </button>
         </td>
       </ng-container>
 
-      <thead>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      </thead>
-      <tbody>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </tbody>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns" cdkDragLockAxis="y"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" cdkDrag [cdkDragData]="row" class="draggable-row" style="background: unset; background-color: #f3dde1"></tr>
     </table>
   </div>
 </div>

@@ -23,6 +23,7 @@ export interface Task {
   imports: [MatCheckboxModule, CommonModule, FormsModule, MatTableModule, MatIconModule, MatButtonModule, MatFormField, MatLabel, MatInput]
 })
 export class ToDoComponent implements OnInit {
+  currentFocusedIndex: number = -1;
   displayedColumns: string[] = ['completed', 'task', 'delete'];
 
   dataSource = new MatTableDataSource<Task>();
@@ -30,12 +31,18 @@ export class ToDoComponent implements OnInit {
   ngOnInit() {
     const local = localStorage.getItem("to-do");
     if (local) {
-      this.dataSource.data = JSON.parse(local); 
+      this.dataSource.data = JSON.parse(local);
     }
   }
 
   onDescriptionChange() {
     localStorage.setItem("to-do", JSON.stringify(this.dataSource.data));
+  }
+
+  onKeydown(event: KeyboardEvent) {
+    if (event.key == "Enter" || event.key == "Escape") {
+      (event.target as HTMLElement).blur()
+    }
   }
 
   onToggleCompleted() {
@@ -53,5 +60,11 @@ export class ToDoComponent implements OnInit {
     this.dataSource._updateChangeSubscription();
 
     localStorage.setItem("to-do", JSON.stringify(this.dataSource.data));
+
+    // Select the input box of the new task
+    const firstInput = document.querySelector('input[matInput]') as HTMLElement;
+    if (firstInput) {
+      firstInput.focus();
+    }
   }
 }

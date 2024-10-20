@@ -79,7 +79,7 @@
     >
       <thead>
         <tr>
-          <th *ngFor="let day of weekDays">
+          <th *ngFor="let day of weekDays" style="font-weight: bold">
             {{ day }}
           </th>
         </tr>
@@ -140,8 +140,9 @@
         <tr>
           <th></th>
           <th *ngFor="let day of weekDays; index as i">
-            {{ day }} {{ monthDays[i].getDate() }}
+            <span style="font-weight: bold">{{ day }} </span>{{ monthDays[i].getDate() }}
           </th>
+
         </tr>
       </thead>
       <tbody cdkDropListGroup>

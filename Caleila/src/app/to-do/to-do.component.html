@@ -14,9 +14,9 @@
     <!-- Task Column with Mat Input -->
     <ng-container matColumnDef="task">
       <th mat-header-cell *matHeaderCellDef> Task </th>
-      <td mat-cell *matCellDef="let task">
+      <td mat-cell *matCellDef="let task; let i = index">
         <mat-form-field class="custom-input">
-          <input matInput [(ngModel)]="task.description" [ngClass]="{'strike-through': task.completed}" (input)="onDescriptionChange()"/>  <!--(change)="saveChanges()"-->
+          <input matInput [(ngModel)]="task.description" (keydown)="onKeydown($event)" (focus)="currentFocusedIndex = i" (blur)="currentFocusedIndex = -1" [ngClass]="{'strike-through': task.completed}" (input)="onDescriptionChange()" />
         </mat-form-field>
       </td>
     </ng-container>
@@ -24,8 +24,8 @@
     <!-- Delete Column -->
     <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef class="delete-column-header"> Delete </th>
-      <td mat-cell *matCellDef="let task" class="delete-column-cell">
-        <button mat-icon-button (click)="deleteTask(task)" class="delete-button">
+      <td mat-cell *matCellDef="let task; let i = index" class="delete-column-cell">
+        <button mat-icon-button  [ngClass]="{'hidden': currentFocusedIndex === i && currentFocusedIndex !== -1}" (click)="deleteTask(task)" class="delete-button">
           <mat-icon>delete</mat-icon>
         </button>
       </td>

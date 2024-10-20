@@ -10,6 +10,7 @@ import { NotesComponent } from '../notes/notes.component';
 import { ToDoComponent } from '../to-do/to-do.component';
 import { GoalsComponent } from '../goals/goals.component';
 import { TasksComponent } from '../tasks/tasks.component';
+import { CollageComponent } from '../collage/collage.component';
 
 @Component({
   selector: 'app-home',
@@ -17,8 +18,9 @@ import { TasksComponent } from '../tasks/tasks.component';
   styleUrl: './home.component.css',
   encapsulation: ViewEncapsulation.None,
   standalone: true,
-  imports: [CommonModule, MatTabsModule, TasksComponent, GoalsComponent, NotesComponent, ToDoComponent],
+  imports: [CommonModule, MatTabsModule, TasksComponent, GoalsComponent, NotesComponent, ToDoComponent, CollageComponent]
 })
+
 export class HomeComponent implements OnInit {
   constructor(private motivationQuotesService: MotivationQuotesService) { }
   private snackBar = inject(MatSnackBar);

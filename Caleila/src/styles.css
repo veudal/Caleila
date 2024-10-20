@@ -21,3 +21,28 @@ body {
 .mat-mdc-tab-body-wrapper {
   flex-grow: 1;
 }
+
+/* For WebKit Browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 10px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Track color */
+  border-radius: 10px; /* Rounded corners */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e1588f; /* Thumb color */
+  border-radius: 10px; /* Rounded corners */
+}
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #d6447e; /* Thumb color on hover */
+  }
+
+/* For Firefox */
+.scrollbar {
+  scrollbar-width: thin; /* Use 'thin' or 'auto' */
+  scrollbar-color: #e1588f #f1f1f1; /* Thumb and track color */
+}
