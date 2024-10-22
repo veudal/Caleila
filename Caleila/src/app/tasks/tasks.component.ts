@@ -16,6 +16,7 @@ interface Appointment {
   startTime: string;
   endTime: string;
   color?: string;
+  completed: boolean;
 }
 
 export enum CalendarView {
@@ -231,11 +232,12 @@ export class TasksComponent {
     this.openDialog();
   }
 
-  addAppointment(date: Date, title: string, startTime: string, endTime: string) {
+  addAppointment(date: Date, title: string, startTime: string, endTime: string, completed: boolean) {
     this.appointments.push({
       uuid: UUIDService.generateUUID(),
       date,
       title,
+      completed,
       startTime,
       endTime,
       color: this.getRandomColor(),
@@ -274,6 +276,7 @@ export class TasksComponent {
         this.addAppointment(
           result.date,
           result.title,
+          result.completed,
           result.startTime,
           result.endTime
         );

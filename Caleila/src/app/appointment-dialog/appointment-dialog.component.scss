@@ -1,5 +1,5 @@
 .dialog-content {
-  padding: 30px 30px 20px;
+  padding: 30px 30px 25px;
   .form-field {
     width: 100%;
   }
@@ -14,4 +14,8 @@
 
 .edit-task-bg {
   background-color: #ffe3b9;
+}
+
+.mat-checkbox {
+  transform: scale(1.8);
 }

@@ -27,7 +27,14 @@
         End time must be after start time.
       </div>
     </div>
-    <div mat-dialog-actions align="right">
+    <div mat-dialog-actions style="display: flex; justify-content: space-between;">
+      <form [formGroup]="appointmentForm" style="display: inline-flex; margin-right: auto;">
+        <mat-checkbox style="margin-right: 10px"
+                      class="mat-checkbox"
+                      formControlName="completed">
+        </mat-checkbox>
+      </form>
+
       <button (click)="onDeleteClick()"
               *ngIf="data.uuid"
               mat-stroked-button>
@@ -39,7 +46,7 @@
         Cancel
       </button>
       <button type="submit" mat-flat-button (click)="onSaveClick()" style="margin-left: 10px">
-        <span *ngIf="data.uuid">Edit Task</span>
+        <span *ngIf="data.uuid">Save Task</span>
         <span *ngIf="!data.uuid">Create Task</span>
       </button>
     </div>

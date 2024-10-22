@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {
   AbstractControl,
   FormBuilder,
+  FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
@@ -15,6 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CommonModule } from '@angular/common';
+import { MatCheckbox } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-appointment-dialog',
@@ -29,6 +31,7 @@ import { CommonModule } from '@angular/common';
     MatButtonModule,
     MatDatepickerModule,
     ReactiveFormsModule,
+    MatCheckbox
   ],
 })
 export class AppointmentDialogComponent {
@@ -43,6 +46,7 @@ export class AppointmentDialogComponent {
       startTime: string;
       endTime: string;
       color: string;
+      completed: boolean;
     },
     private formBuilder: FormBuilder
   ) {
@@ -52,9 +56,14 @@ export class AppointmentDialogComponent {
         date: [this.data.date, Validators.required],
         startTime: [this.data.startTime || '', Validators.required],
         endTime: [this.data.endTime || '', Validators.required],
+        completed: new FormControl(this.data.completed)
       },
-      { validators: this.timeRangeValidator }
+      { validators: this.timeRangeValidator },
     );
+
+    this.appointmentForm.get('completed')?.valueChanges.subscribe(value => {
+      this.data.completed = value; // Sync value with data.completed
+    });
   }
 
   onNoClick(): void {
@@ -69,6 +78,7 @@ export class AppointmentDialogComponent {
         startTime: this.appointmentForm.controls['startTime'].value,
         endTime: this.appointmentForm.controls['endTime'].value,
         uuid: this.data.uuid,
+        completed: this.data.completed
       };
       this.dialogRef.close(data);
     }
