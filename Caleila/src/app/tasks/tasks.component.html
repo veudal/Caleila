@@ -142,6 +142,7 @@
                  cdkDrag
                  cdkDragHandle
                  [cdkDragData]="appointment"
+                 [ngClass]="{ 'strikethrough': appointment.completed }"
                  [ngStyle]="{ 'background-color': appointment.color }"
                  (click)="editAppointment(appointment, $event)"
                  (keydown.enter)="editAppointment(appointment, $event)"
@@ -183,6 +184,7 @@
                  cdkDrag
                  cdkDragHandle
                  [cdkDragData]="appointment"
+                 [ngClass]="{ 'strikethrough': appointment.completed }"
                  [ngStyle]="{ 'background-color': appointment.color }"
                  (click)="editAppointment(appointment, $event)"
                  (keydown.enter)="editAppointment(appointment, $event)"

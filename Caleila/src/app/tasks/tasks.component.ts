@@ -237,10 +237,10 @@ export class TasksComponent {
       uuid: UUIDService.generateUUID(),
       date,
       title,
-      completed,
       startTime,
       endTime,
       color: this.getRandomColor(),
+      completed,
     });
     localStorage.setItem("tasks", JSON.stringify(this.appointments));
   }
@@ -276,9 +276,9 @@ export class TasksComponent {
         this.addAppointment(
           result.date,
           result.title,
-          result.completed,
           result.startTime,
-          result.endTime
+          result.endTime,
+          result.completed
         );
       }
     });
@@ -339,6 +339,7 @@ export class TasksComponent {
         (appointmentStart <= startSlot && appointmentEnd >= endSlot)
       );
     });
+
   }
 
   getRandomColor(): string {

@@ -1,7 +1,7 @@
 <div class="dialog-content"
      [ngClass]="data.uuid ? 'edit-task-bg' : 'add-task-bg'">
-  <h5 mat-dialog-title *ngIf="!data.uuid">Add Task</h5>
-  <h5 mat-dialog-title *ngIf="data.uuid">Edit Task</h5>
+  <h5 mat-dialog-title *ngIf="!data.uuid">➕ Add Task</h5>
+  <h5 mat-dialog-title *ngIf="data.uuid">✏️ Edit Task</h5>
   <div [formGroup]="appointmentForm">
     <div mat-dialog-content>
       <mat-form-field class="form-field">
