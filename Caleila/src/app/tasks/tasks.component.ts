@@ -56,17 +56,21 @@ export class TasksComponent {
   public CalendarView = CalendarView;
 
   constructor(public dialog: MatDialog) {
-    const result = localStorage.getItem("tasks");
-    if (result) {
-      const parsedAppointments = JSON.parse(result);
-      this.appointments = parsedAppointments.map((appointment: Appointment) => ({
-        ...appointment,
-        date: new Date(appointment.date)
-      }));
-    }
+    this.getAppointments();
     this.generateView(this.currentView, this.viewDate);
     this.generateTimeSlots();
   }
+
+    private getAppointments() {
+        const result = localStorage.getItem("tasks");
+        if (result) {
+            const parsedAppointments = JSON.parse(result);
+            this.appointments = parsedAppointments.map((appointment: Appointment) => ({
+                ...appointment,
+                date: new Date(appointment.date)
+            }));
+        }
+    }
 
   generateView(view: CalendarView, date: Date) {
     switch (view) {
@@ -317,12 +321,12 @@ export class TasksComponent {
       date.getFullYear() === this.viewDate.getFullYear()
     );
   }
-     
+
   getAppointmentsForDateTime(date: Date, timeSlot: string): Appointment[] {
     const [hour] = timeSlot.split(':').map(Number);
     const startSlot = new Date(date.getFullYear(), date.getMonth(), date.getDate(), hour, 0);
     const endSlot = new Date(startSlot);
-    endSlot.setHours(endSlot.getHours() + 1); 
+    endSlot.setHours(endSlot.getHours() + 1);
 
     return this.appointments.filter(appointment => {
       const appointmentStart = new Date(appointment.date);
@@ -370,6 +374,9 @@ export class TasksComponent {
           this.appointments[index] = result;
         }
         localStorage.setItem("tasks", JSON.stringify(this.appointments));
+      }
+      else {
+        this.getAppointments()
       }
     });
   }
