@@ -1,7 +1,15 @@
 <div class="container">
   <mat-button-toggle-group value="monthly" (change)="onToggleButtonGroup($event)" class="button-group">
-    <mat-button-toggle value="monthly">Monthly Goals</mat-button-toggle>
-    <mat-button-toggle value="weekly">Weekly Goals</mat-button-toggle>
+    <mat-button-toggle value="monthly">
+      <span class="goal-type">Monthly Goals</span>
+      <span class="separator">|</span>
+      <span class="goal-date">{{month}}</span>
+    </mat-button-toggle>
+    <mat-button-toggle value="weekly">
+      <span class="goal-type">Weekly Goals</span>
+      <span class="separator">|</span>
+      <span class="goal-date">{{week}}</span>
+    </mat-button-toggle>
   </mat-button-toggle-group>
   <div class="child-container">
     <h1>I am ready to</h1>

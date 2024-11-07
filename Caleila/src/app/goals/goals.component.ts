@@ -32,9 +32,34 @@ export class GoalsComponent implements OnInit {
   dataSource = new MatTableDataSource<Goal>();
   currentFocusedIndex: number = -1;
   dragDisabled = true;
+  month = "";
+  week = "";
 
   ngOnInit() {
     this.loadGoals();
+    this.month = this.getCurrentMonth();
+    this.week = this.getCurrentWeek();
+  }
+
+  private getCurrentMonth() {
+    const monthsArr = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    return monthsArr[(new Date).getMonth()];
+  }
+
+  private getCurrentWeek() {
+    const today = new Date();
+    const currentDay = today.getDay();
+
+    const startOfWeek = new Date(today);
+    startOfWeek.setDate(today.getDate() - currentDay + (currentDay === 0 ? -6 : 1));
+    const endOfWeek = new Date(startOfWeek);
+    endOfWeek.setDate(startOfWeek.getDate() + 6);
+
+    const options: Intl.DateTimeFormatOptions = { day: '2-digit', month: '2-digit' };
+    const startDateFormatted = startOfWeek.toLocaleDateString('de-DE', options).slice(0, -1);
+    const endDateFormatted = endOfWeek.toLocaleDateString('de-DE', options).slice(0, -1);
+
+    return `${startDateFormatted} - ${endDateFormatted}`;
   }
 
   private loadGoals() {
@@ -52,7 +77,6 @@ export class GoalsComponent implements OnInit {
   onToggleButtonGroup(event: MatButtonToggleChange) {
     this.selectedTab = event.value + "-goals";
     this.loadGoals();
-    console.log(this.selectedTab);
   }
 
   onDescriptionChange() {
@@ -69,14 +93,14 @@ export class GoalsComponent implements OnInit {
     localStorage.setItem(this.selectedTab, JSON.stringify(this.dataSource.data));
   }
 
-  deleteGoal(task: Goal) {
-    this.dataSource.data = this.dataSource.data.filter(item => item.id !== task.id);
+  deleteGoal(goal: Goal) {
+    this.dataSource.data = this.dataSource.data.filter(item => item.id !== goal.id);
     localStorage.setItem(this.selectedTab, JSON.stringify(this.dataSource.data));
   }
 
   addGoal() {
-    const task: Goal = { description: '', completed: false, id: UUIDService.generateUUID() };
-    this.dataSource.data.push(task);
+    const goal: Goal = { description: '', completed: false, id: UUIDService.generateUUID() };
+    this.dataSource.data.push(goal);
     this.dataSource._updateChangeSubscription();
 
     localStorage.setItem(this.selectedTab, JSON.stringify(this.dataSource.data));

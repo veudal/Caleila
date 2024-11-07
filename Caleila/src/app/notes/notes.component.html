@@ -1,1 +1,33 @@
-<p>---> Notes is in progress...</p>
+<div class="container">
+  <div style="margin-top: 20px;">
+    <h2 matSubheader style="text-align: center">Notebooks</h2>
+    <mat-divider style="border-color: hotpink; margin: 1vw"></mat-divider>
+    <mat-nav-list class="nav-list scrollbar">
+      <a mat-list-item
+         *ngFor="let notebook of dataSource.data.slice().reverse()"
+         (click)="selectNotebook(notebook)"
+         [class.selected]="selectedNotebook === notebook">
+        <mat-icon class="icon">book</mat-icon>
+        {{ notebook.title }}
+      </a>
+    </mat-nav-list>
+  </div>
+
+  <div *ngIf="selectedNotebook" class="notebook">
+    <div class="metadata">
+      <div class="title">
+        <input id="title" [formControl]="inputControl" class="input" spellcheck="false" value="New Notebok" />
+      </div>
+      <div class="dates">
+        <p>Created on: {{ selectedNotebook.createdAt | date:'longDate'}}</p>
+        <p>Last modified: {{ selectedNotebook.modifiedAt | date:'longDate'}}</p>
+
+      </div>
+    </div>
+    <textarea id="content" class="content scrollbar" spellcheck="false" [formControl]="inputControl" [(ngModel)]="notebookContent" placeholder="Start writing...">
+      </textarea>
+  </div>
+</div>
+<button mat-fab class="add-notebook-button" (click)="addNotebook()">
+  <mat-icon>add</mat-icon>
+</button>

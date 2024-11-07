@@ -15,6 +15,18 @@ body {
   font-family: 'Arial', sans-serif; /* Font family */
 }
 
+.goal-type,
+.goal-date {
+  padding: 0 4px;
+}
+
+.separator {
+  color: #aaa;
+  padding: 0 8px;
+}
+
+
+
 .button-group {
   align-self: center;
 }
