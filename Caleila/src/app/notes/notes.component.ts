@@ -127,8 +127,8 @@ export class NotesComponent {
   deleteNotebook() {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, { data: { title: this.selectedNotebook?.title } });
     dialogRef.afterClosed().subscribe(result => {
+
       if (result == "confirm") {
-        console.log(result)
         const i = this.dataSource.data.findIndex(item => item.id == this.selectedNotebook?.id);
         this.dataSource.data.splice(i, 1);
         this.dataSource._updateChangeSubscription();

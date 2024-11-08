@@ -4,7 +4,6 @@
   left: 40px;
   background-color: #ff5dd6;
   color: white;
-
 }
 
 .container {
@@ -72,6 +71,7 @@
 }
 
 .content {
+  font-family: Calibri;
   font-size: 32px;
   flex: 1;
   width: 100%;

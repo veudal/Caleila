@@ -7,7 +7,7 @@ html, body {
 body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
-  background: linear-gradient(to bottom right, #ffffff, #ffc3db); /* Pink to white gradient */
+  background: linear-gradient(to bottom right, #ffffff, #ffddfe); /* Pink to white gradient */
   background-attachment: fixed;
 }
 
@@ -38,7 +38,7 @@ body {
 }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #d6447e; /* Thumb color on hover */
+    background: red;
   }
 
 /* For Firefox */
