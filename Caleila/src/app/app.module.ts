@@ -11,12 +11,18 @@ import { NotesComponent } from './notes/notes.component';
 import { GoalsComponent } from './goals/goals.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { CollageComponent } from './collage/collage.component';
+import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
     AppComponent,
+    ConfirmDialogComponent,
   ],
   imports: [
+    MatDialogModule,
+    MatButtonModule,
     TasksComponent,
     GoalsComponent,
     ToDoComponent,

@@ -11,6 +11,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime } from 'rxjs/internal/operators/debounceTime';
 import { distinctUntilChanged } from 'rxjs/internal/operators/distinctUntilChanged';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { MatDialog, MatDialogContent, MatDialogModule } from '@angular/material/dialog';
 
 export interface Notebook {
   id: string;
@@ -25,33 +27,48 @@ export interface Notebook {
   templateUrl: './notes.component.html',
   styleUrl: './notes.component.css',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, MatListModule, MatButtonModule, MatIconModule, MatMenuModule, MatButtonToggle, MatButtonToggleGroup]
+  imports: [CommonModule, FormsModule, MatDialogModule, MatDialogContent, ReactiveFormsModule, MatListModule, MatButtonModule, MatIconModule, MatMenuModule, MatButtonToggle, MatButtonToggleGroup]
 })
 
 export class NotesComponent {
   dataSource = new MatTableDataSource<Notebook>();
   selectedNotebook: Notebook | null = null;
-  notebookContent: string = '';
+  contentControl = new FormControl();
   inputControl = new FormControl();
-  initialLoad = true;
 
-  constructor() {
+  constructor(private dialog: MatDialog) {
     this.inputControl.valueChanges
       .pipe(
-        debounceTime(2000),
+        debounceTime(500),
         distinctUntilChanged()
       )
-      .subscribe(value => {
-        //not working as intended:
-        //alert(value);
-        this.saveNotebook(value);
+      .subscribe(() => {
+        this.detectChangesAndSave();
+      });
+
+    this.contentControl.valueChanges
+      .pipe(
+        debounceTime(800),
+        distinctUntilChanged()
+      )
+      .subscribe(() => {
+        this.detectChangesAndSave();
       });
   }
 
   ngOnInit() {
-    const local = localStorage.getItem("notes");
+    let local = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith('notes/')) {
+        const value = localStorage.getItem(key);
+        local.push(JSON.parse(value || '{}'));
+      }
+    }
+
     if (local) {
-      this.dataSource.data = JSON.parse(local);
+
+      this.dataSource.data = local;
     }
     else {
       this.dataSource.data = [];
@@ -60,10 +77,13 @@ export class NotesComponent {
     this.dataSource._updateChangeSubscription();
   }
 
-  saveNotebook(value: string) {
+  detectChangesAndSave() {
+    if (this.selectedNotebook == null) {
+      return;
+    }
+
     const content = document.getElementById("content") as HTMLTextAreaElement;
     const title = document.getElementById("title") as HTMLInputElement;
-
 
     const notebook: Notebook = {
       id: this.selectedNotebook!.id,
@@ -73,20 +93,27 @@ export class NotesComponent {
       modifiedAt: new Date()
     }
 
+    const savedNotebook = JSON.parse(localStorage.getItem("notes/" + notebook.id) || '{}');
+    if (savedNotebook.content == notebook.content && savedNotebook.title == notebook.title) {
+      return;
+    }
+
     const i = this.dataSource.data.findIndex(item => item.id == notebook.id);
     this.dataSource.data[i] = notebook;
     this.dataSource._updateChangeSubscription();
-    localStorage.setItem("notes", JSON.stringify(this.dataSource.data));
-    this.selectNotebook(notebook);
+
+    this.saveNotebook(notebook);
   }
 
-  selectNotebook(notebook: Notebook) {
+  selectNotebook(notebook: Notebook | null) {
+    this.detectChangesAndSave();
     this.selectedNotebook = notebook;
-    const title = document.getElementById("title") as HTMLInputElement;
-    title.value = notebook.title;
+    if (notebook == null) {
+      return;
+    }
 
-    const content = document.getElementById("content") as HTMLTextAreaElement;
-    content.value = notebook.content;
+    this.inputControl.setValue(notebook?.title || '');
+    this.contentControl.setValue(notebook?.content || ''); 
   }
 
   addNotebook() {
@@ -94,8 +121,26 @@ export class NotesComponent {
     this.dataSource.data.push(notebook);
     this.dataSource._updateChangeSubscription();
 
-    localStorage.setItem("notes", JSON.stringify(this.dataSource.data));
+    this.saveNotebook(notebook);
+  }
 
+  deleteNotebook() {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, { data: { title: this.selectedNotebook?.title } });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == "confirm") {
+        console.log(result)
+        const i = this.dataSource.data.findIndex(item => item.id == this.selectedNotebook?.id);
+        this.dataSource.data.splice(i, 1);
+        this.dataSource._updateChangeSubscription();
+
+        localStorage.removeItem("notes/" + this.selectedNotebook?.id);
+        this.selectNotebook(null);
+      }
+    });
+  }
+
+  saveNotebook(notebook: Notebook) {
+    localStorage.setItem("notes/" + notebook.id, JSON.stringify(notebook));
     this.selectNotebook(notebook);
   }
 }

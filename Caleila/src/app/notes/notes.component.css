@@ -16,7 +16,7 @@
 
 .nav-list {
   margin: 1rem 1.5em 0rem 1.5rem;
-  min-width: 18vw;
+  width: 20vw;
   max-height: 65vh;
   overflow-y: auto;
   box-sizing: border-box;

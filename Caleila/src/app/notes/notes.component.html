@@ -1,5 +1,5 @@
 <div class="container">
-  <div style="margin-top: 20px;">
+  <div class="list" style="margin-top: 20px;">
     <h2 matSubheader style="text-align: center">Notebooks</h2>
     <mat-divider style="border-color: hotpink; margin: 1vw"></mat-divider>
     <mat-nav-list class="nav-list scrollbar">
@@ -21,10 +21,12 @@
       <div class="dates">
         <p>Created on: {{ selectedNotebook.createdAt | date:'longDate'}}</p>
         <p>Last modified: {{ selectedNotebook.modifiedAt | date:'longDate'}}</p>
-
       </div>
+      <button mat-icon-button (click)="deleteNotebook()">
+        <mat-icon>delete</mat-icon>
+      </button>
     </div>
-    <textarea id="content" class="content scrollbar" spellcheck="false" [formControl]="inputControl" [(ngModel)]="notebookContent" placeholder="Start writing...">
+    <textarea id="content" class="content scrollbar" spellcheck="false" [formControl]="contentControl" placeholder="Start writing...">
       </textarea>
   </div>
 </div>
