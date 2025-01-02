@@ -10,7 +10,7 @@ import { ToDoComponent } from './to-do/to-do.component';
 import { NotesComponent } from './notes/notes.component';
 import { GoalsComponent } from './goals/goals.component';
 import { TasksComponent } from './tasks/tasks.component';
-import { CollageComponent } from './collage/collage.component';
+import { VisionBoardComponent } from './vision-board/vision-board.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
@@ -27,7 +27,7 @@ import { MatButtonModule } from '@angular/material/button';
     GoalsComponent,
     ToDoComponent,
     NotesComponent,
-    CollageComponent,
+    VisionBoardComponent,
     HomeComponent,
     BrowserModule,
     AppRoutingModule,

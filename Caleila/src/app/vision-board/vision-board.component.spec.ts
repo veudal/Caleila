@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CollageComponent } from './collage.component';
+import { VisionBoardComponent } from './vision-board.component';
 
-describe('CollageComponent', () => {
-  let component: CollageComponent;
-  let fixture: ComponentFixture<CollageComponent>;
+describe('VisionBoardComponent', () => {
+  let component: VisionBoardComponent;
+  let fixture: ComponentFixture<VisionBoardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CollageComponent]
+      declarations: [VisionBoardComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CollageComponent);
+    fixture = TestBed.createComponent(VisionBoardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {
   AbstractControl,
@@ -17,6 +17,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CommonModule } from '@angular/common';
 import { MatCheckbox } from '@angular/material/checkbox';
+import '@simonwep/pickr/dist/themes/monolith.min.css';  // 'monolith' theme
+import Pickr from '@simonwep/pickr';
 
 @Component({
   selector: 'app-appointment-dialog',
@@ -34,8 +36,11 @@ import { MatCheckbox } from '@angular/material/checkbox';
     MatCheckbox
   ],
 })
-export class AppointmentDialogComponent {
+export class AppointmentDialogComponent implements OnInit {
   appointmentForm: FormGroup;
+  pickr: Pickr | null = null;
+  color: string = "black";
+
   constructor(
     public dialogRef: MatDialogRef<AppointmentDialogComponent>,
     @Inject(MAT_DIALOG_DATA)
@@ -66,6 +71,17 @@ export class AppointmentDialogComponent {
     });
   }
 
+  ngOnInit() {
+    if (this.data.uuid) {
+      this.color = this.data.color;
+    }
+    this.initColorPicker();
+  }
+
+  onColorClick() {
+    this.pickr?.show();
+  }
+
   onNoClick(): void {
     this.dialogRef.close();
   }
@@ -78,7 +94,8 @@ export class AppointmentDialogComponent {
         startTime: this.appointmentForm.controls['startTime'].value,
         endTime: this.appointmentForm.controls['endTime'].value,
         uuid: this.data.uuid,
-        completed: this.data.completed
+        completed: this.data.completed,
+        color: this.data.color
       };
       this.dialogRef.close(data);
     }
@@ -111,4 +128,40 @@ export class AppointmentDialogComponent {
     }
     return null;
   };
+
+  private initColorPicker() {
+    this.pickr = Pickr.create({
+      el: '.color-picker',
+      theme: 'monolith',
+      useAsButton: true,
+      position: "left-end",
+      autoReposition: true,
+      default: 'pink',
+      lockOpacity: true,
+      swatches: ['382215', '7C3F20', 'C06F37', 'FEAD6C', 'FFD2B1', 'FFA4D0',
+        'F14FB4', 'E973FF', 'A630D2', '531D8C', '242367', '0334BF', '149CFF', '8DF5FF', '01BFA5', '16777E', '054523', '18862F',
+        '61E021', 'B1FF37', 'FFFFA5', 'FDE111', 'FF9F17', 'F66E08', '550022', '99011A', 'F30F0C', 'FF7872'],
+      components: {
+
+        preview: true,
+        opacity: false,
+        hue: true,
+
+        interaction: {
+          hex: false,
+          rgba: false,
+          cancel: false,
+          input: false,
+          clear: false,
+          save: false
+        }
+      }
+    });
+
+    this.pickr.on('change', (color: any) => {
+      const hexa = color.toHEXA();
+      this.color = "#" + hexa[0] + hexa[1] + hexa[2];
+      this.data.color = this.color;
+    });
+  }
 }

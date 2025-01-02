@@ -1,0 +1,7 @@
+<div class="container" (click)="openFile()">
+  <img src="" />
+  <input type="file" accept="image/*" style="display:none" (change)="onChange()">
+  <div *ngIf="selectedImage">
+    <img [src]="selectedImage" alt="Selected Image" style="height: 100%; width: 100%; position: fixed;" />
+  </div>
+</div>

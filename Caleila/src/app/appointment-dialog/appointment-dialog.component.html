@@ -1,3 +1,7 @@
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/monolith.min.css" />
+</head>
+<div class="color-picker"></div>
 <div class="dialog-content"
      [ngClass]="data.uuid ? 'edit-task-bg' : 'add-task-bg'">
   <h5 mat-dialog-title *ngIf="!data.uuid">➕ Add Task</h5>
@@ -34,7 +38,7 @@
                       formControlName="completed">
         </mat-checkbox>
       </form>
-
+      <div id="color-circle" [style.background-color]="color" (click)="onColorClick()"></div>
       <button (click)="onDeleteClick()"
               *ngIf="data.uuid"
               mat-stroked-button>

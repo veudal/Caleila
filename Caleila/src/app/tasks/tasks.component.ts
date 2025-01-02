@@ -61,16 +61,16 @@ export class TasksComponent {
     this.generateTimeSlots();
   }
 
-    private getAppointments() {
-        const result = localStorage.getItem("tasks");
-        if (result) {
-            const parsedAppointments = JSON.parse(result);
-            this.appointments = parsedAppointments.map((appointment: Appointment) => ({
-                ...appointment,
-                date: new Date(appointment.date)
-            }));
-        }
+  private getAppointments() {
+    const result = localStorage.getItem("tasks");
+    if (result) {
+      const parsedAppointments = JSON.parse(result);
+      this.appointments = parsedAppointments.map((appointment: Appointment) => ({
+        ...appointment,
+        date: new Date(appointment.date)
+      }));
     }
+  }
 
   generateView(view: CalendarView, date: Date) {
     switch (view) {
@@ -236,14 +236,14 @@ export class TasksComponent {
     this.openDialog();
   }
 
-  addAppointment(date: Date, title: string, startTime: string, endTime: string, completed: boolean) {
+  addAppointment(date: Date, title: string, startTime: string, endTime: string, completed: boolean, color: string) {
     this.appointments.push({
       uuid: UUIDService.generateUUID(),
       date,
       title,
       startTime,
       endTime,
-      color: this.getRandomColor(),
+      color: color ? color : this.getRandomColor(),
       completed,
     });
     localStorage.setItem("tasks", JSON.stringify(this.appointments));
@@ -282,7 +282,8 @@ export class TasksComponent {
           result.title,
           result.startTime,
           result.endTime,
-          result.completed
+          result.completed,
+          result.color
         );
       }
     });
