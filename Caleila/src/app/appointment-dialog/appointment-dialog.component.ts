@@ -17,7 +17,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { CommonModule } from '@angular/common';
 import { MatCheckbox } from '@angular/material/checkbox';
-import '@simonwep/pickr/dist/themes/monolith.min.css';  // 'monolith' theme
 import Pickr from '@simonwep/pickr';
 
 @Component({
@@ -80,6 +79,10 @@ export class AppointmentDialogComponent implements OnInit {
 
   onColorClick() {
     this.pickr?.show();
+  }
+
+  ngOnDestroy() {
+    this.pickr?.destroyAndRemove();
   }
 
   onNoClick(): void {
